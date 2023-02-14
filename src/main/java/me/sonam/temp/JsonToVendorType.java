@@ -51,7 +51,7 @@ public class JsonToVendorType {
                         vendor.getInvoice().getBuyer().setShipToAddress(predictionItem.getOcr_text());
                     }
                     else if (predictionItem.getLabel().equals("invoice_amount")) {
-                        vendor.getInvoice().setAmount(new BigDecimal(predictionItem.getOcr_text()));
+                        vendor.getInvoice().setAmount(predictionItem.getOcr_text());
                     }
                     else if (predictionItem.getLabel().equals("seller_email")) {
                         vendor.setEmail(predictionItem.getOcr_text());
@@ -63,7 +63,7 @@ public class JsonToVendorType {
                         vendor.getInvoice().getBuyer().setShipToAddress(predictionItem.getOcr_text());
                     }
                     else if (predictionItem.getLabel().equals("total_due_amount")) {
-                        vendor.getInvoice().setAmount(new BigDecimal(predictionItem.getOcr_text()));
+                        vendor.getInvoice().setAmount(predictionItem.getOcr_text());
                     }
                     else if (predictionItem.getLabel().equals("payment_due_date")) {
                         vendor.getInvoice().setDueDate(predictionItem.getOcr_text());
@@ -88,13 +88,13 @@ public class JsonToVendorType {
                                 if (cell.getRow() > row) {
                                     row = cell.getRow();
                                     vendor.getInvoice().getInvoiceDetails().add(new InvoiceDetail());
-                                    LOG.info("added invoiceDetail: row: {}, col: {}", row, col);
+                                   // LOG.info("added invoiceDetail: row: {}, col: {}", row, col);
                                 }
 
                                 if (cell.getLabel().equals("Description")) {
-                                    LOG.info("cell.getText: '{}'", cell.getText());
+                                    //LOG.info("cell.getText: '{}'", cell.getText());
                                     if (cell.getText().isEmpty() || cell.getText().equals("null") || cell.getText().trim().equals("")) {
-                                        LOG.info("break");
+                                      //  LOG.info("break");
                                         vendor.getInvoice().getInvoiceDetails().remove(row-1);
                                         break;
                                     }
@@ -104,17 +104,17 @@ public class JsonToVendorType {
                                 }
                                 else if (cell.getLabel().equals("Quantity")) {
                                     if (!cell.getText().isEmpty()) {
-                                        vendor.getInvoice().getInvoiceDetails().get(row - 1).setQuantity(Integer.parseInt(cell.getText()));
+                                        vendor.getInvoice().getInvoiceDetails().get(row - 1).setQuantity(new BigDecimal(cell.getText()));
                                     }
                                 }
                                 else if (cell.getLabel().equals("Price")) {
                                     if (!cell.getText().isEmpty()) {
-                                        vendor.getInvoice().getInvoiceDetails().get(row-1).setPrice(new BigDecimal(cell.getText()));
+                                        vendor.getInvoice().getInvoiceDetails().get(row-1).setPrice(cell.getText());
                                     }
                                 }
                                 else if (cell.getLabel().equals("Line_Amount")) {
                                     if (!cell.getText().isEmpty()) {
-                                        vendor.getInvoice().getInvoiceDetails().get(row-1).setAmount(new BigDecimal(cell.getText()));
+                                        vendor.getInvoice().getInvoiceDetails().get(row-1).setAmount(cell.getText());
                                     }
                                 }
                             }
@@ -296,7 +296,7 @@ class Invoice {
 
     private String invoiceDate;
     private String invoiceNumber;
-    private BigDecimal amount;
+    private String amount;
 
     public String getDueDate() {
         return dueDate;
@@ -309,11 +309,11 @@ class Invoice {
     private String dueDate;
     private Buyer buyer = new Buyer();
 
-    public BigDecimal getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
@@ -410,9 +410,9 @@ class Invoice {
 
 class InvoiceDetail {
     private String description;
-    private int quantity;
-    private BigDecimal price;
-    private BigDecimal amount;
+    private BigDecimal quantity;
+    private String price;
+    private String amount;
 
     @Override
     public String toString() {
@@ -432,27 +432,27 @@ class InvoiceDetail {
         this.description = description;
     }
 
-    public int getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 
-    public BigDecimal getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public BigDecimal getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 }

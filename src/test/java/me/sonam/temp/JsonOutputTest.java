@@ -19,7 +19,7 @@ import java.io.IOException;
 public class JsonOutputTest {
     private static final Logger LOG = LoggerFactory.getLogger(JsonOutputTest.class);
 
-    @Value("${jsonfolder}")
+    @Value("file:///Users/ssamdupkhangsar/Downloads/invoicejson/")
     private Resource resource;
 
     @Test

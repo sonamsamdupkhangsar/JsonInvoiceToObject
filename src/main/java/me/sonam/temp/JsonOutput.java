@@ -176,7 +176,35 @@ class PredictionItem {
     private int page_no;
     private String label_id;
 
+    public List<Relationship> getRelationships() {
+        return relationships;
+    }
 
+    public void setRelationships(List<Relationship> relationships) {
+        this.relationships = relationships;
+    }
+
+    private List<Relationship> relationships = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "PredictionItem{" +
+                "id='" + id + '\'' +
+                ", label='" + label + '\'' +
+                ", xmin=" + xmin +
+                ", ymin=" + ymin +
+                ", xmax=" + xmax +
+                ", ymax=" + ymax +
+                ", score=" + score +
+                ", ocr_text='" + ocr_text + '\'' +
+                ", type='" + type + '\'' +
+                ", cells=" + cells +
+                ", status='" + status + '\'' +
+                ", page_no=" + page_no +
+                ", label_id='" + label_id + '\'' +
+                ", relationships='" + relationships + '\'' +
+                '}';
+    }
 
     public List<Cell> getCells() {
         return cells;
@@ -280,6 +308,27 @@ class PredictionItem {
 
     public void setLabel_id(String label_id) {
         this.label_id = label_id;
+    }
+}
+
+class Relationship {
+    private String id;
+    private String type;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
 class Cell {
